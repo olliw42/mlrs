@@ -192,6 +192,7 @@ class tWhileTransmit : public tWhileBase
   public:
     uint32_t dtmax_us(void) override { return sx.TimeOverAir_us() - 1000; }
     void handle_once(void) override;
+    void handle(void) override;
 };
 
 tWhileTransmit whileTransmit;
@@ -220,6 +221,14 @@ void tWhileTransmit::handle_once(void)
         draw_tlast_ms = tnow_ms;
         disp.Draw();
     }
+#endif
+}
+
+
+void tWhileTransmit::handle(void)
+{
+#ifdef USE_DISPLAY
+    disp.SpinI2C();
 #endif
 }
 

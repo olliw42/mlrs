@@ -128,6 +128,10 @@
 #endif
 
 
+extern "C" {
+void i2c_spin(uint16_t chunksize) {}
+}
+
 
 // setup(), loop() streamlining between Arduino/STM code
 uint8_t restart_controller = 0;

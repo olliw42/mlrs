@@ -20,7 +20,11 @@ extern "C" {
 #endif
 
 
+#ifdef ESP32
+#include "../../Common/hal/esp-glue.h"
+#else
 #include "main.h" // this is to include the correct stm32XXxx_hal.h
+#endif
 #include "../thirdparty/gfxfont.h"
 
 

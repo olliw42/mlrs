@@ -23,6 +23,27 @@ void __disable_irq(void) {}
 void __enable_irq(void) {}
 
 
+typedef enum {
+    DISABLE = 0,
+    ENABLE = !DISABLE
+} FunctionalState;
+
+
+// that's to provide pieces from STM32 HAL used in the code
+#define HAL_I2C_MODULE_ENABLED
+typedef enum
+{
+    HAL_OK       = 0x00U,
+    HAL_ERROR    = 0x01U,
+    HAL_BUSY     = 0x02U,
+    HAL_TIMEOUT  = 0x03U
+} HAL_StatusTypeDef;
+
+
+#define __REV16(x)  __builtin_bswap16(x)
+#define __REVSH(x)  __builtin_bswap16(x)
+#define __REV(x)    __builtin_bswap32(x)
+
 
 // setup(), loop() streamlining between Arduino/STM code
 static uint8_t restart_controller = 0;
