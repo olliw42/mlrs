@@ -6,6 +6,8 @@
 // hal
 //*******************************************************
 
+// FOR SiK TELEM USE ONLY !
+
 /*
   Info on DIP switches
    
@@ -318,7 +320,7 @@ void ser_or_com_init(void)
     uint8_t cnt = 0;
     for (uint8_t i = 0; i < 16; i++) {
         uint16_t adc = analogRead(FIVEWAY_ADC_IO);
-        if (adc > (KEY_DOWN_THRESH-200) && adc < (KEY_DOWN_THRESH+200)) cnt++;
+        if (adc > (KEY_DOWN_THRESH-250) && adc < (KEY_DOWN_THRESH+250)) cnt++;
     }
     tx_ser_or_com_serial = !(cnt > 8);
 }

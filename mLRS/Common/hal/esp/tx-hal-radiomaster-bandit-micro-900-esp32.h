@@ -6,6 +6,8 @@
 // hal
 //*******************************************************
 
+// FOR SiK TELEM USE ONLY !
+
 /*
   Flashing ESP8285:
   - put Tx module into FLASH_ESP mode

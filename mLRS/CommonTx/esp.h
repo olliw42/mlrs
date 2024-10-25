@@ -72,7 +72,11 @@ bool com_is_full(void)
 #ifdef DEVICE_HAS_COM_ON_USB
     return usb_tx_full();
 #else
+  #if defined DEVICE_HAS_ESP_WIFI_BRIDGE_ON_SERIAL2 && defined DEVICE_HAS_SERIAL_OR_COM
+    return !uartb_tx_notfull();
+  #else
     return !uartc_tx_notfull();
+  #endif  
 #endif
 }
 
@@ -291,7 +295,7 @@ void tTxEspWifiBridge::EnterFlash(void)
     esp_gpio0_low();
     delay_ms(10); // delay_ms(100);
     esp_reset_high();
-    delay_ms(10); // delay_ms(100);
+    delay_ms(100); // delay_ms(10) is too short, ESP8285 needs more time
     esp_gpio0_high();
     delay_ms(10); // delay_ms(100);
 #endif

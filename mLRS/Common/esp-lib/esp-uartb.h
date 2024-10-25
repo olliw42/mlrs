@@ -73,10 +73,10 @@ typedef enum {
 #endif
 
 #ifdef ESP32
-  #if (UARTB_TXBUFSIZE > 0) && (UARTB_TXBUFSIZE < 256) 
+  #if (UARTB_TXBUFSIZE > 0) && (UARTB_TXBUFSIZE < 256)
     #error UARTB_TXBUFSIZE must be 0 or >= 256
   #endif
-  #if (UARTB_RXBUFSIZE < 256) 
+  #if (UARTB_RXBUFSIZE < 256)
     #error UARTB_RXBUFSIZE must be >= 256
   #endif
 #endif
@@ -93,6 +93,12 @@ IRAM_ATTR void uartb_putbuf(uint8_t* buf, uint16_t len)
 #elif defined ESP8266
     UARTB_SERIAL_NO.write((uint8_t*)buf, len);
 #endif
+}
+
+
+IRAM_ATTR uint16_t uartb_tx_notfull(void)
+{
+    return 1; // fifo not full
 }
 
 
@@ -237,15 +243,15 @@ void uartb_setprotocol(uint32_t baud, UARTPARITYENUM parity, UARTSTOPBITENUM sto
 void uartb_tx_enablepin(FunctionalState flag) {} // not supported
 
 
-void uartb_rx_enableisr(FunctionalState flag) 
+void uartb_rx_enableisr(FunctionalState flag)
 {
 #ifdef ESP32
     if (flag == ENABLE) {
-        ESP_ERROR_CHECK(uart_enable_rx_intr(UARTB_SERIAL_NO));    
+        ESP_ERROR_CHECK(uart_enable_rx_intr(UARTB_SERIAL_NO));
     } else {
-        ESP_ERROR_CHECK(uart_disable_rx_intr(UARTB_SERIAL_NO));    
+        ESP_ERROR_CHECK(uart_disable_rx_intr(UARTB_SERIAL_NO));
     }
-#endif    
+#endif
 }
 
 
@@ -263,7 +269,7 @@ void uartb_init_isroff(void)
 void uartb_init(void)
 {
     uartb_init_isroff();
-    // isr is enabled !    
+    // isr is enabled !
 }
 
 
@@ -271,7 +277,7 @@ void uartb_init(void)
 // System bootloader
 //-------------------------------------------------------
 // ESP8266, ESP32 can't reboot into system bootloader
-  
+
 IRAM_ATTR uint8_t uartb_has_systemboot(void)
 {
     return 0;
