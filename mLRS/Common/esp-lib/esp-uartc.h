@@ -102,12 +102,6 @@ IRAM_ATTR uint16_t uartc_tx_notfull(void)
 }
 
 
-IRAM_ATTR uint16_t uartc_tx_notfull(void)
-{
-    return 1; // fifo not full
-}
-
-
 IRAM_ATTR void uartc_tx_flush(void)
 {
 #ifdef ESP32
