@@ -104,6 +104,7 @@
 #define UARTE_RXBUFSIZE           512
 
 #define UARTF_USE_SERIAL2 // debug is on JRPin5
+//#define UARTF_USE_SERIAL // debug
 #define UARTF_BAUD                115200
 #define UARTF_USE_TX_IO           IO_P13
 #define UARTF_USE_RX_IO           -1
