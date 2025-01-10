@@ -25,6 +25,10 @@
 #include "rx-hal-generic-900-td-pa-esp32.h"
 #endif
 
+#ifdef RX_ELRS_GENERIC_LR1121_TD_ESP32
+#include "rx-hal-generic-lr1121-td-esp32.h"
+#endif
+
 //-- Generic 868/915 MHz ELRS devices with overlays or other variations
 
 #ifdef RX_ELRS_RADIOMASTER_BR3_900_ESP8285

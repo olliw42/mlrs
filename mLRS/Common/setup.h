@@ -85,6 +85,8 @@ void setup_configure_metadata(void)
     SetupMetaData.Mode_allowed_mask = 0b10110; // 31 Hz, 19 Hz, FSK
 #elif defined DEVICE_HAS_SX127x
     SetupMetaData.Mode_allowed_mask = 0b00100; // 19 Hz, not editable
+#elif defined DEVICE_HAS_LR11xx
+    SetupMetaData.Mode_allowed_mask = 0b00110; // 19 Hz, 31 Hz
 #endif
 
     //-- Ortho: "off,1/3,2/3,3/3"
@@ -363,6 +365,8 @@ void setup_sanitize_config(uint8_t config_id)
     constexpr uint8_t fallback_mode = MODE_31HZ;
 #elif defined DEVICE_HAS_SX127x
     constexpr uint8_t fallback_mode = MODE_19HZ;
+#elif defined DEVICE_HAS_LR11xx
+    constexpr uint8_t fallback_mode = MODE_31HZ;
 #endif
     SANITIZE(Common[config_id].Mode, MODE_NUM, SETUP_MODE, fallback_mode); // MODE_19HZ
     TST_NOTALLOWED(Mode_allowed_mask, Common[config_id].Mode, fallback_mode); // MODE_19HZ
@@ -504,8 +508,11 @@ void configure_mode(uint8_t mode)
         Config.frame_rate_hz = 31;
 #ifdef DEVICE_HAS_SX128x
         Config.Sx.LoraConfigIndex = SX128x_LORA_CONFIG_BW800_SF6_CRLI4_5;
+#elif defined DEVICE_HAS_LR11xx
+        Config.Sx.LoraConfigIndex = LR11xx_LORA_CONFIG_BW500_SF5_CR4_5;
 #else
         Config.Sx.LoraConfigIndex = SX126x_LORA_CONFIG_BW500_SF5_CR4_5;
+
 #endif
         Config.send_frame_tmo_ms = MODE_31HZ_SEND_FRAME_TMO_MS; // 15
         break;
@@ -517,6 +524,8 @@ void configure_mode(uint8_t mode)
         Config.Sx.LoraConfigIndex = SX128x_LORA_CONFIG_BW800_SF7_CRLI4_5;
 #elif defined DEVICE_HAS_SX126x || defined DEVICE_HAS_DUAL_SX126x_SX128x || defined DEVICE_HAS_DUAL_SX126x_SX126x
         Config.Sx.LoraConfigIndex = SX126x_LORA_CONFIG_BW500_SF6_CR4_5;
+#elif defined DEVICE_HAS_LR11xx
+        Config.Sx.LoraConfigIndex = LR11xx_LORA_CONFIG_BW500_SF6_CR4_5;
 #else
         Config.Sx.LoraConfigIndex = SX127x_LORA_CONFIG_BW500_SF6_CR4_5;
 #endif

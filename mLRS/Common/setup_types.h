@@ -317,6 +317,12 @@ typedef enum {
     SX126x_LORA_CONFIG_NUM,
 } SX126x_LORA_CONFIG_ENUM;
 
+typedef enum {
+    LR11xx_LORA_CONFIG_BW500_SF5_CR4_5 = 0,
+    LR11xx_LORA_CONFIG_BW500_SF6_CR4_5,
+    LR11xx_LORA_CONFIG_NUM,
+} LR11xx_LORA_CONFIG_ENUM;
+
 
 //-------------------------------------------------------
 // Setup Types

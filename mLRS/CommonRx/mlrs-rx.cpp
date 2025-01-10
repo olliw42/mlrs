@@ -8,7 +8,7 @@
 //*******************************************************
 
 
-#define DBG_MAIN(x)
+#define DBG_MAIN(x) x
 #define DBG_MAIN_SLIM(x)
 #define DEBUG_ENABLED
 #define FAIL_ENABLED

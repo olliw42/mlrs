@@ -37,6 +37,14 @@
   #define FREQUENCY_BAND_915_MHZ_FCC
 #endif
 
+#ifdef RX_ELRS_GENERIC_LR1121_TD_ESP32
+  #define DEVICE_NAME "GENERIC LR1121 TD"
+  #define DEVICE_IS_RECEIVER
+  #define DEVICE_HAS_LR11xx
+  //#define FREQUENCY_BAND_868_MHZ
+  #define FREQUENCY_BAND_915_MHZ_FCC
+#endif
+
 //-- Generic 868/915 MHz ELRS devices with overlays or other variations
 
 #ifdef RX_ELRS_RADIOMASTER_BR3_900_ESP8285

@@ -50,6 +50,8 @@
   #define SX12XX_FREQ_MHZ_TO_REG(f_mhz)  SX126X_FREQ_MHZ_TO_REG(f_mhz)
 #elif defined DEVICE_HAS_SX127x
   #define SX12XX_FREQ_MHZ_TO_REG(f_mhz)  SX127X_FREQ_MHZ_TO_REG(f_mhz)
+#elif defined DEVICE_HAS_LR11xx
+  #define SX12XX_FREQ_MHZ_TO_REG(f_mhz)  LR11XX_FREQ_MHZ_TO_REG(f_mhz)
 #else // DEVICE_HAS_SX128x
   // for 2.4 GHz we directly use SX1280_FREQ_GHZ_TO_REG(), not SX12XX_FREQ_MHZ_TO_REG()
 #endif
@@ -583,6 +585,8 @@ class tFhssBase
         return 1.0E3f * SX126X_REG_TO_FREQ_KHZ(GetCurrFreq());
 #elif defined DEVICE_HAS_SX127x
         return 1.0E3f * SX127X_REG_TO_FREQ_KHZ(GetCurrFreq());
+#elif defined DEVICE_HAS_LR11xx
+        return 1.0E3f * LR11XX_REG_TO_FREQ_KHZ(GetCurrFreq());
 #else // DEVICE_HAS_SX128x
         return 1.0E6f * SX1280_REG_TO_FREQ_MHZ(GetCurrFreq());
 #endif
@@ -611,6 +615,9 @@ class tFhssBase
 #elif defined DEVICE_HAS_SX127x
         strcpy(unit_str, " kHz");
         return (uint32_t)SX127X_REG_TO_FREQ_KHZ(fhss_list[i]);
+#elif defined DEVICE_HAS_LR11xx
+        strcpy(unit_str, " kHz");
+        return (uint32_t)LR11XX_REG_TO_FREQ_KHZ(fhss_list[i]);
 #else // DEVICE_HAS_SX128x
         strcpy(unit_str, " MHz");
         return (uint32_t)SX1280_REG_TO_FREQ_MHZ(fhss_list[i]);
