@@ -17,7 +17,7 @@
 class tRfPower
 {
   public:
-    void Init(void);
+    void Init(bool _antenna1, bool _antenna2);
     void Update(void);
     void Set(tRcData* const rc, uint8_t power_switch_channel, uint8_t power);
     void Set(uint8_t power);
@@ -25,13 +25,18 @@ class tRfPower
   private:
     uint8_t rfpower_current_idx;
     uint8_t rfpower_new_idx;
+    bool do_antenna1;
+    bool do_antenna2;
 };
 
 
-void tRfPower::Init(void)
+void tRfPower::Init(bool _antenna1, bool _antenna2)
 {
     rfpower_current_idx = 0;
     rfpower_new_idx = rfpower_current_idx; // to prevent update before first Set
+
+    do_antenna1 = _antenna1;
+    do_antenna2 = _antenna2;
 }
 
 
@@ -49,8 +54,8 @@ void tRfPower::Update(void)
     Config.Sx.Power_dbm = rfpower_list[rfpower_current_idx].dbm;
     Config.Sx2.Power_dbm = Config.Sx.Power_dbm;
 
-    sx.UpdateRfPower(&Config.Sx);
-    sx2.UpdateRfPower(&Config.Sx2);
+    if (do_antenna1) sx.UpdateRfPower(&Config.Sx);
+    if (do_antenna2) sx2.UpdateRfPower(&Config.Sx2);
 }
 
 

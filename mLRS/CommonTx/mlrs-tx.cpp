@@ -723,7 +723,7 @@ RESTARTCONTROLLER
     bind.Init();
     fhss.Init(&Config.Fhss, &Config.Fhss2);
     fhss.Start();
-    rfpower.Init();
+    rfpower.Init(TRANSMIT_USE_ANTENNA1, TRANSMIT_USE_ANTENNA2);
 
     sx.SetRfFrequency(fhss.GetCurrFreq());
     sx2.SetRfFrequency(fhss.GetCurrFreq2());

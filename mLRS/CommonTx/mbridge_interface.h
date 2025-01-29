@@ -570,8 +570,15 @@ tMBridgeInfo info = {};
 
     info.tx_config_id = Config.ConfigId;
 
-    info.receiver_sensitivity = sx.ReceiverSensitivity_dbm(); // is equal for Tx and Rx
-    info.tx_actual_power_dbm = sx.RfPower_dbm();
+    if (Config.TransmitUseAntenna1) {
+    	info.receiver_sensitivity = sx.ReceiverSensitivity_dbm(); // is equal for Tx and Rx
+    	info.tx_actual_power_dbm = sx.RfPower_dbm();
+    }
+    else {
+    	info.receiver_sensitivity = sx2.ReceiverSensitivity_dbm();
+    	info.tx_actual_power_dbm = sx2.RfPower_dbm();
+    }
+
     info.tx_actual_diversity = Config.Diversity;
 
     if (SetupMetaData.rx_available) {
