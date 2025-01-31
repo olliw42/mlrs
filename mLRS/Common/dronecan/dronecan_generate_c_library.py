@@ -13,7 +13,22 @@ import os
 import shutil
 import re
 import sys
+import venv
+import pathlib
+import subprocess
 
+script_folder = pathlib.Path(__file__).parent.resolve()
+venv_folder = os.path.join(script_folder, 'venv')
+venv.create(venv_folder, with_pip=True)
+python_path = os.path.join(venv_folder, "bin", "python")
+
+def pip_install(package):
+    res = subprocess.call([python_path, "-m", "pip",  "install",  package])
+
+pip_install("setuptools")
+pip_install("empy==3.3.4")
+pip_install("pexpect")
+pip_install("dronecan")
 
 mLRSProjectdirectory = os.path.dirname(os.path.abspath(__file__))
 mLRSdirectory = os.path.join(mLRSProjectdirectory,'mLRS')
@@ -33,7 +48,7 @@ def kill_outdir():
 
 
 def os_system(arg):
-    res = os.system(arg)
+    res = os.system(f"{python_path} {arg}")
     if res != 0:
         print('# ERROR (errno =',res,') DONE #')
         os.system("pause")

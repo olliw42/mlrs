@@ -1,5 +1,6 @@
 mLRS/Common/mavlink/out/*
 mLRS/Common/dronecan/out/*
+mLRS/Common/dronecan/venv
 esp/mlrs-wifi-bridge/*.cfg
 esp/mlrs-wifi-bridge/*.json
 esp/mlrs-wifi-bridge/*.svd
