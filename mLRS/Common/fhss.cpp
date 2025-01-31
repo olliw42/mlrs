@@ -158,19 +158,19 @@ void tFhssBase::generate_ortho_except(uint32_t seed, uint8_t ortho, uint8_t exce
         switch (_except) {
         case EXCEPT_2P4_GHZ_WIFIBAND_1:
             // #1, 2.412 GHz +- 11 MHz = ]0 , 17[
-            if (SX1280_FREQ_GHZ_TO_REG(2.401) <= freq && freq <= SX1280_FREQ_GHZ_TO_REG(2.423)) continue;
+            if (SX12XX_FREQ_GHZ_TO_REG(2.401) <= freq && freq <= SX12XX_FREQ_GHZ_TO_REG(2.423)) continue;
             break;
         case EXCEPT_2P4_GHZ_WIFIBAND_6:
             // #6, 2.437 GHz +- 11 MHz = ]20 , 42[
-            if (SX1280_FREQ_GHZ_TO_REG(2.426) <= freq && freq <= SX1280_FREQ_GHZ_TO_REG(2.448)) continue;
+            if (SX12XX_FREQ_GHZ_TO_REG(2.426) <= freq && freq <= SX12XX_FREQ_GHZ_TO_REG(2.448)) continue;
             break;
         case EXCEPT_2P4_GHZ_WIFIBAND_11:
             // #11, 2.462 GHz +- 11 MHz = ]45 , 67[
-            if (SX1280_FREQ_GHZ_TO_REG(2.451) <= freq && freq <= SX1280_FREQ_GHZ_TO_REG(2.473)) continue;
+            if (SX12XX_FREQ_GHZ_TO_REG(2.451) <= freq && freq <= SX12XX_FREQ_GHZ_TO_REG(2.473)) continue;
             break;
         case EXCEPT_2P4_GHZ_WIFIBAND_13:
             // #13, 2.472 GHz +- 11 MHz = ]55, 67[
-            if (SX1280_FREQ_GHZ_TO_REG(2.461) <= freq && freq <= SX1280_FREQ_GHZ_TO_REG(2.483)) continue;
+            if (SX12XX_FREQ_GHZ_TO_REG(2.461) <= freq && freq <= SX12XX_FREQ_GHZ_TO_REG(2.483)) continue;
             break;
         }
 #endif
