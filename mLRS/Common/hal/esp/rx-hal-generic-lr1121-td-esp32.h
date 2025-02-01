@@ -52,24 +52,15 @@ void sx_init_gpio(void)
     gpio_init(SX_RESET, IO_MODE_OUTPUT_PP_LOW);
 }
 
-IRAM_ATTR bool sx_busy_read(void)
-{
-    return (gpio_read_activehigh(SX_BUSY)) ? true : false;
-}
+IRAM_ATTR bool sx_busy_read(void) { return (gpio_read_activehigh(SX_BUSY)) ? true : false; }
 
 IRAM_ATTR void sx_amp_transmit(void) {}
 
 IRAM_ATTR void sx_amp_receive(void) {}
 
-void sx_dio_init_exti_isroff(void)
-{
-    detachInterrupt(SX_DIO1);
-}
+void sx_dio_init_exti_isroff(void) { detachInterrupt(SX_DIO1); }
 
-void sx_dio_enable_exti_isr(void)
-{
-    attachInterrupt(SX_DIO1, SX_DIO_EXTI_IRQHandler, RISING);
-}
+void sx_dio_enable_exti_isr(void) { attachInterrupt(SX_DIO1, SX_DIO_EXTI_IRQHandler, RISING); }
 
 IRAM_ATTR void sx_dio_exti_isr_clearflag(void) {}
 
@@ -93,34 +84,19 @@ void sx2_init_gpio(void)
     gpio_init(SX2_RESET, IO_MODE_OUTPUT_PP_LOW);
 }
 
-IRAM_ATTR void spib_select(void)
-{
-    gpio_low(SX2_CS_IO);
-}
+IRAM_ATTR void spib_select(void) {  gpio_low(SX2_CS_IO); }
 
-IRAM_ATTR void spib_deselect(void)
-{
-    gpio_high(SX2_CS_IO);
-}
+IRAM_ATTR void spib_deselect(void) { gpio_high(SX2_CS_IO); }
 
-IRAM_ATTR bool sx2_busy_read(void)
-{
-    return (gpio_read_activehigh(SX2_BUSY)) ? true : false;
-}
+IRAM_ATTR bool sx2_busy_read(void) { return (gpio_read_activehigh(SX2_BUSY)) ? true : false; }
 
 IRAM_ATTR void sx2_amp_transmit(void) {}
 
 IRAM_ATTR void sx2_amp_receive(void) {}
 
-void sx2_dio_init_exti_isroff(void)
-{
-    detachInterrupt(SX2_DIO1);
-}
+void sx2_dio_init_exti_isroff(void) { detachInterrupt(SX2_DIO1); }
 
-void sx2_dio_enable_exti_isr(void)
-{
-    attachInterrupt(SX2_DIO1, SX2_DIO_EXTI_IRQHandler, RISING);
-}
+void sx2_dio_enable_exti_isr(void) { attachInterrupt(SX2_DIO1, SX2_DIO_EXTI_IRQHandler, RISING); }
 
 void sx2_dio_exti_isr_clearflag(void) {}
 
@@ -129,94 +105,33 @@ void sx2_dio_exti_isr_clearflag(void) {}
 
 #define BUTTON                    IO_P0
 
-void button_init(void)
-{
-    gpio_init(BUTTON, IO_MODE_INPUT_PU);
-}
+void button_init(void) { gpio_init(BUTTON, IO_MODE_INPUT_PU); }
 
-IRAM_ATTR bool button_pressed(void)
-{
-    return gpio_read_activelow(BUTTON) ? true : false;
-}
+IRAM_ATTR bool button_pressed(void) { return gpio_read_activelow(BUTTON) ? true : false; }
 
 
 //-- LEDs
-#include <NeoPixelBus.h>
-#define LED_RED                    IO_P22
-bool ledRedState;
-bool ledGreenState;
-bool ledBlueState;
 
-NeoPixelBus<NeoGrbFeature, NeoEsp32I2s0Ws2812xMethod> ledRGB(1, LED_RED);
+#include "../../esp-lib/esp-rgb.h"
 
-void leds_init(void)
-{
-    ledRGB.Begin();
-    ledRGB.Show();
-}
+#define LED_PIN                    IO_P22
+#define LED_COUNT                  1
 
-IRAM_ATTR void led_red_off(void)
-{
-    if (!ledRedState) return;
-    ledRGB.SetPixelColor(0, RgbColor(0, 0, 0));
-    ledRGB.Show();
-    ledRedState = 0;
-}
+static ESP32LedDriver *ledRGB;
 
-IRAM_ATTR void led_red_on(void)
-{
-    if (ledRedState) return;
-    ledRGB.SetPixelColor(0, RgbColor(255, 0, 0));
-    ledRGB.Show();
-    ledRedState = 1;
-}
+void leds_init(void) { ledRGB = new ESP32LedDriver(LED_COUNT, LED_PIN); }
 
-IRAM_ATTR void led_red_toggle(void)
-{
-    if (ledRedState) { led_red_off(); } else { led_red_on(); }
-}
+IRAM_ATTR void led_red_off(void) { ledRGB->redOff(0,0); }
+IRAM_ATTR void led_red_on(void) { ledRGB->redOn(0,0); }
+IRAM_ATTR void led_red_toggle(void) { ledRGB->redToggle(0,0); }
 
-IRAM_ATTR void led_green_off(void)
-{
-    if (!ledGreenState) return;
-    ledRGB.SetPixelColor(0, RgbColor(0, 0, 0));
-    ledRGB.Show();
-    ledGreenState = 0;
-}
+IRAM_ATTR void led_green_off(void) { ledRGB->greenOff(0,0); }
+IRAM_ATTR void led_green_on(void) { ledRGB->greenOn(0,0); }
+IRAM_ATTR void led_green_toggle(void) { ledRGB->greenToggle(0,0); }
 
-IRAM_ATTR void led_green_on(void)
-{
-    if (ledGreenState) return;
-    ledRGB.SetPixelColor(0, RgbColor(0, 255, 0));
-    ledRGB.Show();
-    ledGreenState = 1;
-}
-
-IRAM_ATTR void led_green_toggle(void)
-{
-    if (ledGreenState) { led_green_off(); } else { led_green_on(); }
-}
-
-IRAM_ATTR void led_blue_off(void)
-{
-    if (!ledBlueState) return;
-    ledRGB.SetPixelColor(0, RgbColor(0, 0, 0));
-    ledRGB.Show();
-    ledBlueState = 0;
-}
-
-IRAM_ATTR void led_blue_on(void)
-{
-    if (ledBlueState) return;
-    ledRGB.SetPixelColor(0, RgbColor(0, 0, 255));
-    ledRGB.Show();
-    ledBlueState = 1;
-}
-
-IRAM_ATTR void led_blue_toggle(void)
-{
-    if (ledBlueState) { led_blue_off(); } else { led_blue_on(); }
-}
+IRAM_ATTR void led_blue_off(void) { ledRGB->blueOff(0,0); }
+IRAM_ATTR void led_blue_on(void) { ledRGB->blueOn(0,0); }
+IRAM_ATTR void led_blue_toggle(void) { ledRGB->blueToggle(0,0); }
 
 
 //-- POWER
