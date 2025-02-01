@@ -59,8 +59,8 @@ typedef enum {
   #if (UARTD_TXBUFSIZE > 0) && (UARTD_TXBUFSIZE < 256)
     #error UARTD_TXBUFSIZE must be 0 or >= 256
   #endif
-  #if (UARTD_RXBUFSIZE < 256)
-    #error UARTD_RXBUFSIZE must be >= 256
+  #if (UARTD_RXBUFSIZE > 0) && (UARTD_RXBUFSIZE < 256)
+    #error UARTD_TXBUFSIZE must be 0 or >= 256
   #endif
 #endif
 

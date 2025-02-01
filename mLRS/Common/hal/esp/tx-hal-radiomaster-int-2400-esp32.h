@@ -60,7 +60,7 @@
 */
 
 
-#define DEVICE_HAS_JRPIN5_FULL_DUPLEX
+#define DEVICE_HAS_JRPIN5
 #define DEVICE_HAS_SINGLE_LED
 #define DEVICE_HAS_NO_COM
 //#define DEVICE_HAS_NO_DEBUG
@@ -86,8 +86,10 @@
 #define UART_BAUD                 400000
 #define UART_USE_TX_IO            IO_P1
 #define UART_USE_RX_IO            IO_P3
-#define UART_TXBUFSIZE            TX_SERIAL_TXBUFSIZE
-#define UART_RXBUFSIZE            TX_SERIAL_RXBUFSIZE // 512
+#define UART_TXBUFSIZE            0 // TX_SERIAL_TXBUFSIZE
+#define UART_RXBUFSIZE            0 // TX_SERIAL_RXBUFSIZE // 512
+
+#define JR_PIN5_FULL_DUPLEX       // Internal module
 
 #define UARTF_USE_SERIAL2 // debug
 #define UARTF_BAUD                115200

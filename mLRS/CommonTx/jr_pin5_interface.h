@@ -63,8 +63,8 @@ void (*uart_tc_callback_ptr)(void) = &uart_tc_callback_dummy;
 #define UART_RX_CALLBACK_FULL(c)    (*uart_rx_callback_ptr)(c)
 #define UART_TC_CALLBACK()          (*uart_tc_callback_ptr)()
 
-#ifdef DEVICE_HAS_JRPIN5_FULL_DUPLEX
-#include "jr_pin5_interface_full_duplex.h"
+#if defined ESP8266 || defined ESP32
+#include "jr_pin5_interface_esp.h"
 #else
 #include "../modules/stm32ll-lib/src/stdstm32-uart.h"
 
@@ -123,9 +123,6 @@ class tPin5BridgeBase
     void pin5_rx_callback(uint8_t c);
     void pin5_tc_callback(void);
 
-    // asynchronous uart handler
-    void pin5_do(void);
-
     // parser
     typedef enum {
         STATE_IDLE = 0,
@@ -153,6 +150,7 @@ class tPin5BridgeBase
     uint8_t len;
     uint8_t cnt;
     uint16_t tlast_us;
+    uint16_t discarded;
 
     // check and rescue
     // the FRM303 can get stuck, whatever we tried, so brutal rescue
@@ -168,6 +166,7 @@ void tPin5BridgeBase::Init(void)
     len = 0;
     cnt = 0;
     tlast_us = 0;
+    discarded = 0;
 
     telemetry_start_next_tick = false;
     telemetry_state = 0;
@@ -357,16 +356,6 @@ void tPin5BridgeBase::pin5_tc_callback(void)
 
 
 //-------------------------------------------------------
-// Pin5 asynchronous uart handler
-// polled in Crsf or mBridge ChannelsUpdated()
-
-void tPin5BridgeBase::pin5_do(void)
-{
-    // not used on STM32
-}
-
-
-//-------------------------------------------------------
 // Check and rescue
 // a good place to call it could be ChannelsUpdated()
 // Note: For the FRM303 it was observed that the TC callback may be missed in the uart isr, basically when
@@ -397,6 +386,6 @@ void tPin5BridgeBase::CheckAndRescue(void)
 }
 
 
-#endif // !DEVICE_HAS_JRPIN5_FULL_DUPLEX
+#endif // !DEVICE_HAS_JRPIN5_NO_TC
 
 #endif // JRPIN5_INTERFACE_H

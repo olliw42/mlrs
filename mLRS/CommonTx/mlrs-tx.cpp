@@ -752,7 +752,7 @@ RESTARTCONTROLLER
     sx_serial.Init(&serial, &mbridge, &serial2); // ports selected by SerialDestination, ChannelsSource
     cli.Init(&comport);
 #ifdef USE_ESP_WIFI_BRIDGE
-  #ifdef DEVICE_HAS_JRPIN5_FULL_DUPLEX
+  #if defined JR_PIN5_FULL_DUPLEX
     esp.Init(&jrpin5serial, &serial, &serial2, Config.SerialBaudrate, &Setup.Tx[Config.ConfigId]);
   #else
     esp.Init(&comport, &serial, &serial2, Config.SerialBaudrate, &Setup.Tx[Config.ConfigId]);

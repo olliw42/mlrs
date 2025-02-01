@@ -59,8 +59,8 @@ typedef enum {
   #if (UART$_TXBUFSIZE > 0) && (UART$_TXBUFSIZE < 256)
     #error UART$_TXBUFSIZE must be 0 or >= 256
   #endif
-  #if (UART$_RXBUFSIZE < 256)
-    #error UART$_RXBUFSIZE must be >= 256
+  #if (UART$_RXBUFSIZE > 0) && (UART$_RXBUFSIZE < 256)
+    #error UART$_TXBUFSIZE must be 0 or >= 256
   #endif
 #endif
 

@@ -39,8 +39,7 @@ following for the tx-hal and rx-hal files.
 In tx-hal files:
 
 #define DEVICE_HAS_DIVERSITY        // board supports diversity
-#define DEVICE_HAS_JRPIN5           // board has a pin for JR bay Pin5/SPort
-#define DEVICE_HAS_JRPIN5_FULL_DUPLEX   // board has full duplex uart for JR bay Pin5 function
+#define DEVICE_HAS_JRPIN5           // board has a pin for JR bay Pin5/SPort with tc interrupt
 #define DEVICE_HAS_IN               // board has an IN port, which supports both normal and inverted UART signals
 #define DEVICE_HAS_IN_NORMAL        // board has an IN port, which supports only normal UART signals
 #define DEVICE_HAS_IN_INVERTED      // board has an IN port, which supports only inverted UART signals
@@ -323,7 +322,7 @@ Note: Some "high-level" features are set for each device in the device_conf.h fi
 #endif // DEVICE_IS_TRANSMITTER
 
 
-#if defined DEVICE_HAS_JRPIN5 || defined DEVICE_HAS_JRPIN5_FULL_DUPLEX
+#if defined DEVICE_HAS_JRPIN5
    #define USE_JRPIN5
 #endif
 

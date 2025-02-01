@@ -174,7 +174,22 @@ void tMBridge::parse_nextchar(uint8_t c)
 
     switch (state) {
     case STATE_IDLE:
-        if (c == MBRIDGE_STX1) state = STATE_RECEIVE_MBRIDGE_STX2;
+        if (c == MBRIDGE_STX1) {
+            state = STATE_RECEIVE_MBRIDGE_STX2;
+#ifdef USE_DEBUG
+            if (discarded) {
+                if (discarded > 1) {
+                    dbg.puts(u16toBCD_s(discarded));
+                    dbg.puts(" bytes lost!\n");
+                }
+                discarded = 0;
+            }
+        }
+        else {
+            // Detect discarded bytes
+            discarded++;
+#endif
+        }
         break;
 
     case STATE_RECEIVE_MBRIDGE_STX2:
@@ -338,8 +353,6 @@ bool tMBridge::ChannelsUpdated(tRcData* const rc)
     if (crsf_emulation) return false; // CRSF: just don't ever do it, should not happen
 
     if (!enabled) return false;
-
-    pin5_do();
 
     CheckAndRescue();
 

@@ -6,8 +6,6 @@
 // hal
 //*******************************************************
 
-// FOR SiK TELEM USE ONLY !
-
 /*
   Flashing ESP8285:
   - change ser dest to serial2
@@ -61,12 +59,12 @@
 */
 
 
-//#define DEVICE_HAS_JRPIN5
+#define DEVICE_HAS_JRPIN5
 //#define DEVICE_HAS_IN
-#define DEVICE_HAS_SERIAL_OR_COM // board has UART which is shared between Serial or Com, selected by e.g. a switch
-//#define DEVICE_HAS_NO_SERIAL
-//#define DEVICE_HAS_NO_COM
-#define DEVICE_HAS_NO_DEBUG
+//#define DEVICE_HAS_SERIAL_OR_COM // board has UART which is shared between Serial or Com, selected by e.g. a switch
+#define DEVICE_HAS_NO_SERIAL
+#define DEVICE_HAS_NO_COM
+//#define DEVICE_HAS_NO_DEBUG
 
 #ifdef TX_ELRS_RADIOMASTER_BANDIT_900_ESP32
 #define DEVICE_HAS_I2C_DISPLAY
@@ -99,16 +97,23 @@
 #define UARTC_TXBUFSIZE           0 // ?? // TX_COM_TXBUFSIZE
 #define UARTC_RXBUFSIZE           TX_COM_RXBUFSIZE
 
-#define UARTD_USE_SERIAL1 // serial2 BT/ESP
+#define UARTD_USE_SERIAL2 // serial2 BT/ESP
 #define UARTD_BAUD                115200
 #define UARTD_USE_TX_IO           IO_P17
 #define UARTD_USE_RX_IO           IO_P16
 #define UARTD_TXBUFSIZE           1024 // TX_SERIAL_TXBUFSIZE
 #define UARTD_RXBUFSIZE           TX_SERIAL_RXBUFSIZE
 
-#define UARTF_USE_SERIAL2 // debug is on JRPin5
+#define UART_USE_SERIAL1 // full duplex CRSF/MBridge (JR pin5)
+#define UART_BAUD                 400000
+#define UART_USE_TX_IO            IO_P13
+#define UART_USE_RX_IO            IO_P13
+#define UART_TXBUFSIZE            0 // 512 // 128 fifo should be sufficient
+#define UART_RXBUFSIZE            0 // 512
+
+#define UARTF_USE_SERIAL // debug is on RT
 #define UARTF_BAUD                115200
-#define UARTF_USE_TX_IO           IO_P13
+#define UARTF_USE_TX_IO           IO_P1
 #define UARTF_USE_RX_IO           -1
 #define UARTF_TXBUFSIZE           512 // ?? // 512
 
